@@ -1,30 +1,41 @@
 import { getLocation, getWeather } from "./weather.js";
+import { showLoading, showError, showWeather } from "./ui.js";
+
+const card = document.getElementById("weather-card");
+const status = document.getElementById("status");
+const btn = document.getElementById("search-btn");
+
+const cityName = document.getElementById("city-name");
+const temperature = document.getElementById("temperature");
+const humidity = document.getElementById("humidity");
+const wind = document.getElementById("wind");
 
 document
   .getElementById("search-form")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const card = document.getElementById("weather-card");
-
     try {
+      showLoading(card, status, btn);
+
       const location = await getLocation(
         document.getElementById("city-input").value.trim(),
       );
       const weather = await getWeather(location.latitude, location.longitude);
 
-      card.hidden = false;
-      document.getElementById("city-name").textContent = location.name;
-      // TODO: add weather icon
-      document.getElementById("temperature").textContent =
-        `${weather.current.temperature_2m}${weather.current_units.temperature_2m}`;
-      // TODO: add description
-      document.getElementById("humidity").textContent =
-        `${weather.current.relative_humidity_2m}${weather.current_units.relative_humidity_2m}`;
-      document.getElementById("wind").textContent =
-        `${weather.current.wind_speed_10m}${weather.current_units.wind_speed_10m}`;
+      showWeather(
+        location,
+        weather,
+        card,
+        status,
+        cityName,
+        temperature,
+        humidity,
+        wind,
+      );
     } catch (error) {
-      card.hidden = true;
-      console.error(error);
+      showError(card, status, error);
+    } finally {
+      btn.disabled = false;
     }
   });
