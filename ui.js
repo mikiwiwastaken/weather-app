@@ -1,4 +1,13 @@
-export function showLoading(card, status, btn) {
+const card = document.getElementById("weather-card");
+const status = document.getElementById("status");
+const btn = document.getElementById("search-btn");
+
+const cityName = document.getElementById("city-name");
+const temperature = document.getElementById("temperature");
+const humidity = document.getElementById("humidity");
+const wind = document.getElementById("wind");
+
+export function showLoading() {
   card.hidden = true;
   status.hidden = false;
   btn.disabled = true;
@@ -7,7 +16,7 @@ export function showLoading(card, status, btn) {
   status.textContent = "Loading...";
 }
 
-export function showError(card, status, error) {
+export function showError(error) {
   card.hidden = true;
   status.hidden = false;
 
@@ -20,16 +29,7 @@ export function showError(card, status, error) {
   }
 }
 
-export function showWeather(
-  location,
-  weather,
-  card,
-  status,
-  cityName,
-  temperature,
-  humidity,
-  wind,
-) {
+export function showWeather(location, weather) {
   status.hidden = true;
 
   cityName.textContent = location.name;
@@ -40,4 +40,8 @@ export function showWeather(
   wind.textContent = `${weather.current.wind_speed_10m}${weather.current_units.wind_speed_10m}`;
 
   card.hidden = false;
+}
+
+export function enableSearch() {
+  btn.disabled = false;
 }
