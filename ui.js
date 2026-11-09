@@ -12,7 +12,12 @@ export function showError(card, status, error) {
   status.hidden = false;
 
   status.classList.add("status--error");
-  status.textContent = error.message;
+
+  if (error.code === "NOT_FOUND") {
+    status.textContent = `City "${error.city}" not found.`;
+  } else {
+    status.textContent = "Could not load weather data. Please try again later.";
+  }
 }
 
 export function showWeather(

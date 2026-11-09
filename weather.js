@@ -11,9 +11,12 @@ export async function getLocation(city) {
 
   if (data.results && data.results.length > 0) {
     return data.results[0];
-  } else {
-    throw new Error(`No results found for city: ${city}`);
   }
+
+  const error = new Error(`No results found for city: ${city}`);
+  error.code = "NOT_FOUND";
+  error.city = city;
+  throw error;
 }
 
 export async function getWeather(latitude, longitude) {

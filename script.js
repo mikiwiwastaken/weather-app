@@ -34,6 +34,7 @@ document
         wind,
       );
     } catch (error) {
+      console.error(error);
       showError(card, status, error);
     } finally {
       btn.disabled = false;
