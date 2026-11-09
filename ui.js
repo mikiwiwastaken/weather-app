@@ -1,9 +1,13 @@
+import { getWeatherDetails } from "./weather-codes.js";
+
 const card = document.getElementById("weather-card");
 const status = document.getElementById("status");
 const btn = document.getElementById("search-btn");
 
 const cityName = document.getElementById("city-name");
+const weatherIcon = document.querySelector("#weather-icon i");
 const temperature = document.getElementById("temperature");
+const description = document.getElementById("description");
 const humidity = document.getElementById("humidity");
 const wind = document.getElementById("wind");
 
@@ -30,12 +34,14 @@ export function showError(error) {
 }
 
 export function showWeather(location, weather) {
+  const details = getWeatherDetails(weather.current.weather_code);
+
   status.hidden = true;
 
   cityName.textContent = location.name;
-  // TODO: add weather icon
+  weatherIcon.className = details.icon;
   temperature.textContent = `${weather.current.temperature_2m}${weather.current_units.temperature_2m}`;
-  // TODO: add description
+  description.textContent = details.description;
   humidity.textContent = `${weather.current.relative_humidity_2m}${weather.current_units.relative_humidity_2m}`;
   wind.textContent = `${weather.current.wind_speed_10m}${weather.current_units.wind_speed_10m}`;
 
