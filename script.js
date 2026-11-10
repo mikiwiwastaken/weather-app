@@ -1,4 +1,4 @@
-import { getLocation, getWeather } from "./weather.js";
+import { getLocation, getWeather } from "./weather-api.js";
 import { showLoading, showError, showWeather, enableSearch } from "./ui.js";
 
 document
