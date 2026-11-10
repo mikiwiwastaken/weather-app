@@ -11,6 +11,9 @@ const description = document.getElementById("description");
 const humidity = document.getElementById("humidity");
 const wind = document.getElementById("wind");
 
+const recentEmpty = document.getElementById("recent-empty");
+const recentList = document.getElementById("recent-list");
+
 export function showLoading() {
   card.hidden = true;
   status.hidden = false;
@@ -50,4 +53,16 @@ export function showWeather(location, weather) {
 
 export function enableSearch() {
   btn.disabled = false;
+}
+
+export function renderRecentSearches(recentSearches) {
+  recentList.innerHTML = "";
+
+  recentEmpty.hidden = recentSearches.length > 0;
+
+  recentSearches.forEach((search) => {
+    const item = document.createElement("li");
+    item.textContent = search;
+    recentList.appendChild(item);
+  });
 }

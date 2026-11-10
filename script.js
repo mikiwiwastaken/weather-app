@@ -1,27 +1,40 @@
 import { getLocation, getWeather } from "./weather-api.js";
-import { showLoading, showError, showWeather, enableSearch } from "./ui.js";
-import { saveLastCity, loadLastCity } from "./storage.js";
+import {
+  showLoading,
+  showError,
+  showWeather,
+  enableSearch,
+  renderRecentSearches,
+} from "./ui.js";
+import { saveRecentSearches, loadRecentSearches } from "./storage.js";
 
 const cityInput = document.getElementById("city-input");
+let recentSearches = loadRecentSearches() ? loadRecentSearches() : [];
 
 document.getElementById("search-form").addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const cityName = cityInput.value.trim();
-  if (cityName === "") return;
-  searchWeather(cityName);
+  const city = cityInput.value.trim();
+  if (city === "") return;
+  searchWeather(city);
 });
 
-async function searchWeather(cityName) {
+async function searchWeather(city) {
   try {
     showLoading();
 
-    const location = await getLocation(cityName);
+    const location = await getLocation(city);
     const weather = await getWeather(location.latitude, location.longitude);
+    const cityName = location.name;
 
     showWeather(location, weather);
 
-    saveLastCity(cityName);
+    recentSearches = recentSearches.filter((search) => search !== cityName);
+    recentSearches.push(cityName);
+    if (recentSearches.length > 5) recentSearches.shift();
+
+    saveRecentSearches(recentSearches);
+    renderRecentSearches(recentSearches);
   } catch (error) {
     console.error(error);
     showError(error);
@@ -30,12 +43,4 @@ async function searchWeather(cityName) {
   }
 }
 
-function init() {
-  const cityName = loadLastCity();
-  if (!cityName) return;
-
-  cityInput.value = cityName;
-  searchWeather(cityName);
-}
-
-init();
+renderRecentSearches(recentSearches);

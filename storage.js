@@ -1,14 +1,15 @@
-export function saveLastCity(city) {
+export function saveRecentSearches(searches) {
   try {
-    localStorage.setItem("city", city);
+    localStorage.setItem("searches", JSON.stringify(searches));
   } catch (error) {
     console.error(error);
   }
 }
 
-export function loadLastCity() {
+export function loadRecentSearches() {
   try {
-    return localStorage.getItem("city");
+    const searches = JSON.parse(localStorage.getItem("searches"));
+    return Array.isArray(searches) ? searches : null;
   } catch (error) {
     console.error(error);
     return null;
