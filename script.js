@@ -30,8 +30,8 @@ async function searchWeather(city) {
     showWeather(location, weather);
 
     cities = cities.filter((city) => city !== cityName);
-    cities.push(cityName);
-    if (cities.length > 5) cities.shift();
+    cities.unshift(cityName);
+    if (cities.length > 5) cities.pop();
 
     saveCities(cities);
     renderRecentSearches(cities);
