@@ -55,12 +55,12 @@ export function enableSearch() {
   btn.disabled = false;
 }
 
-export function renderRecentSearches(recentSearches) {
+export function renderRecentSearches(cities) {
   recentList.innerHTML = "";
 
-  recentEmpty.hidden = recentSearches.length > 0;
+  recentEmpty.hidden = cities.length > 0;
 
-  recentSearches.forEach((search) => {
+  cities.forEach((search) => {
     const item = document.createElement("li");
     item.textContent = search;
     recentList.appendChild(item);

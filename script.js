@@ -6,10 +6,10 @@ import {
   enableSearch,
   renderRecentSearches,
 } from "./ui.js";
-import { saveRecentSearches, loadRecentSearches } from "./storage.js";
+import { saveCities, loadCities } from "./storage.js";
 
 const cityInput = document.getElementById("city-input");
-let recentSearches = loadRecentSearches() ? loadRecentSearches() : [];
+let cities = loadCities() ? loadCities() : [];
 
 document.getElementById("search-form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -29,12 +29,12 @@ async function searchWeather(city) {
 
     showWeather(location, weather);
 
-    recentSearches = recentSearches.filter((search) => search !== cityName);
-    recentSearches.push(cityName);
-    if (recentSearches.length > 5) recentSearches.shift();
+    cities = cities.filter((search) => search !== cityName);
+    cities.push(cityName);
+    if (cities.length > 5) cities.shift();
 
-    saveRecentSearches(recentSearches);
-    renderRecentSearches(recentSearches);
+    saveCities(cities);
+    renderRecentSearches(cities);
   } catch (error) {
     console.error(error);
     showError(error);
@@ -43,4 +43,4 @@ async function searchWeather(city) {
   }
 }
 
-renderRecentSearches(recentSearches);
+renderRecentSearches(cities);
