@@ -1,10 +1,10 @@
-/* ---------- Design tokens ---------- */
+/* ---------- Design Tokens ---------- */
 :root {
-  --bg: #d6e4ee; /* pale sky */
-  --surface: #f6f9fb; /* card background */
-  --ink: #17324a; /* main text */
-  --ink-soft: #5b7389; /* secondary text */
-  --accent: #e39a2d; /* sun amber, used for the button */
+  --bg: #d6e4ee;
+  --surface: #f6f9fb;
+  --ink: #17324a;
+  --ink-soft: #5b7389;
+  --accent: #e39a2d;
   --accent-ink: #2b1a00;
   --error: #b3261e;
   --radius: 16px;
@@ -15,7 +15,6 @@
   box-sizing: border-box;
 }
 
-/* Make the "hidden" attribute win over any display rule below */
 [hidden] {
   display: none !important;
 }
@@ -23,9 +22,10 @@
 body {
   margin: 0;
   min-height: 100vh;
-  display: grid;
-  place-items: start center;
-  padding: 48px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 20px;
   background: var(--bg);
   color: var(--ink);
   font-family:
@@ -36,17 +36,35 @@ body {
     sans-serif;
 }
 
+/* ---------- App Layout ---------- */
 .app {
+  position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 900px;
 }
 
 .app__title {
-  margin: 0 0 20px;
-  font-size: 1.5rem;
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 1.7rem;
   font-weight: 600;
 }
 
+/* Weather stays centered */
+.app__content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.app__main {
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+}
+
+/* ---------- Visually Hidden ---------- */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -56,7 +74,7 @@ body {
   white-space: nowrap;
 }
 
-/* ---------- Search form ---------- */
+/* ---------- Search Form ---------- */
 .search {
   display: flex;
   gap: 8px;
@@ -93,12 +111,13 @@ body {
 .search button:hover {
   filter: brightness(1.06);
 }
+
 .search button:disabled {
   opacity: 0.6;
   cursor: wait;
 }
 
-/* ---------- Status message ---------- */
+/* ---------- Status ---------- */
 .status {
   margin: 16px 2px 0;
   color: var(--ink-soft);
@@ -109,7 +128,7 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Weather card ---------- */
+/* ---------- Weather Card ---------- */
 .card {
   margin-top: 20px;
   padding: 28px 24px;
@@ -135,7 +154,6 @@ body {
   line-height: 1;
 }
 
-/* The temperature is the one memorable element on the page */
 .card__temp {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 5rem;
@@ -168,9 +186,114 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Small screens ---------- */
+/* ---------- Recent Searches ---------- */
+.recent-searches {
+  position: absolute;
+  top: 0;
+  left: calc(50% + 230px);
+  width: 240px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.recent-searches__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.recent-searches__header h2 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.recent-searches__header h2 i {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.recent-searches__header button {
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: var(--error);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.recent-searches__header button:hover {
+  text-decoration: underline;
+}
+
+.recent-searches__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-searches__list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  border-radius: 8px;
+  background: #eaf0f4;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.recent-searches__list li i {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.recent-searches__empty {
+  justify-content: center;
+  color: var(--ink-soft);
+  background: transparent !important;
+  font-size: 0.8rem !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 850px) {
+  body {
+    padding: 40px 16px;
+  }
+
+  .app__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .app__main {
+    max-width: 420px;
+  }
+
+  .recent-searches {
+    position: static;
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
+/* ---------- Small Screens ---------- */
 @media (max-width: 360px) {
   .card__temp {
     font-size: 4rem;
+  }
+
+  .card__details {
+    gap: 20px;
   }
 }

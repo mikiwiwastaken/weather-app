@@ -4,54 +4,83 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Weather</title>
+
     <link rel="stylesheet" href="style.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
     />
+
     <script type="module" src="script.js"></script>
   </head>
+
   <body>
     <main class="app">
       <h1 class="app__title">Weather</h1>
 
-      <form id="search-form" class="search">
-        <label for="city-input" class="visually-hidden">City Name</label>
-        <input
-          id="city-input"
-          type="text"
-          placeholder="Enter a city name"
-          autocomplete="off"
-          required
-        />
-        <button id="search-btn" type="submit">Search</button>
-      </form>
+      <div class="app__content">
+        <!-- Weather Section -->
+        <div class="app__main">
+          <form id="search-form" class="search">
+            <label for="city-input" class="visually-hidden"> City Name </label>
 
-      <p id="status" class="status" role="status" hidden></p>
+            <input
+              id="city-input"
+              type="text"
+              placeholder="Enter a city name"
+              autocomplete="off"
+              required
+            />
 
-      <section id="weather-card" class="card" hidden>
-        <h2 id="city-name" class="card__city">--</h2>
+            <button id="search-btn" type="submit">Search</button>
+          </form>
 
-        <div class="card__main">
-          <span id="weather-icon" class="card__icon" aria-hidden="true"
-            ><i></i
-          ></span>
-          <span id="temperature" class="card__temp">--</span>
+          <p id="status" class="status" role="status" hidden></p>
+
+          <section id="weather-card" class="card" hidden>
+            <h2 id="city-name" class="card__city">--</h2>
+
+            <div class="card__main">
+              <span id="weather-icon" class="card__icon" aria-hidden="true">
+                <i></i>
+              </span>
+
+              <span id="temperature" class="card__temp">--</span>
+            </div>
+
+            <p id="description" class="card__desc">--</p>
+
+            <dl class="card__details">
+              <div>
+                <dt>Humidity</dt>
+                <dd id="humidity">--</dd>
+              </div>
+
+              <div>
+                <dt>Wind Speed</dt>
+                <dd id="wind">--</dd>
+              </div>
+            </dl>
+          </section>
         </div>
 
-        <p id="description" class="card__desc">--</p>
+        <!-- Recent Searches Section -->
+        <aside class="recent-searches">
+          <div class="recent-searches__header">
+            <h2>
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              Recent Searches
+            </h2>
 
-        <dl class="card__details">
-          <div>
-            <dt>Humidity</dt>
-            <dd id="humidity">--</dd>
+            <button id="clear-history" type="button">Clear</button>
           </div>
-          <div>
-            <dt>Wind Speed</dt>
-            <dd id="wind">--</dd>
-          </div>
-        </dl>
-      </section>
+
+          <ul id="recent-list" class="recent-searches__list">
+            <li class="recent-searches__empty">No recent searches</li>
+          </ul>
+        </aside>
+      </div>
     </main>
   </body>
 </html>
