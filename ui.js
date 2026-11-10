@@ -62,7 +62,16 @@ export function renderRecentSearches(cities) {
 
   cities.forEach((city) => {
     const item = document.createElement("li");
-    item.textContent = city;
+    item.className = "recent-item";
+    item.tabIndex = 0;
+
+    const icon = document.createElement("i");
+    icon.className = "fa-solid fa-clock-rotate-left";
+
+    const name = document.createElement("span");
+    name.textContent = city;
+
+    item.append(icon, name);
     recentList.appendChild(item);
   });
 }

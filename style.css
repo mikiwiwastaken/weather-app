@@ -232,6 +232,7 @@ body {
   text-decoration: underline;
 }
 
+/* ---------- Recent Searches List ---------- */
 .recent-searches__list {
   display: flex;
   flex-direction: column;
@@ -244,17 +245,48 @@ body {
 .recent-searches__list li {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
   border-radius: 8px;
   background: #eaf0f4;
+  color: var(--ink);
   font-size: 0.85rem;
-  overflow-wrap: anywhere;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .recent-searches__list li i {
+  flex-shrink: 0;
   color: var(--ink-soft);
   font-size: 0.8rem;
+}
+
+.recent-searches__list li span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-searches__list li:hover {
+  background: #dce8f0;
+  border-color: #c4d5e1;
+  transform: translateX(3px);
+}
+
+.recent-searches__list li:active {
+  transform: scale(0.98);
+  background: #d1e0eb;
+}
+
+.recent-searches__list li:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
 .recent-searches__empty {
@@ -262,6 +294,7 @@ body {
   color: var(--ink-soft);
   background: transparent !important;
   font-size: 0.8rem !important;
+  cursor: default !important;
 }
 
 /* ---------- Responsive ---------- */
