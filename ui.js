@@ -60,9 +60,9 @@ export function renderRecentSearches(cities) {
 
   recentEmpty.hidden = cities.length > 0;
 
-  cities.forEach((search) => {
+  cities.forEach((city) => {
     const item = document.createElement("li");
-    item.textContent = search;
+    item.textContent = city;
     recentList.appendChild(item);
   });
 }
