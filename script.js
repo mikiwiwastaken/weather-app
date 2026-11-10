@@ -8,15 +8,26 @@ import {
 } from "./ui.js";
 import { saveCities, loadCities } from "./storage.js";
 
-const cityInput = document.getElementById("city-input");
+const searchForm = document.getElementById("search-form");
+const recentList = document.getElementById("recent-list");
+
+let cityInput = document.getElementById("city-input");
 let cities = loadCities() ? loadCities() : [];
 
-document.getElementById("search-form").addEventListener("submit", (event) => {
+searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const city = cityInput.value.trim();
   if (city === "") return;
   searchWeather(city);
+});
+
+recentList.addEventListener("click", (event) => {
+  const item = event.target.closest("li");
+  if (!item) return;
+
+  cityInput.value = item.dataset.city;
+  searchWeather(cityInput.value);
 });
 
 async function searchWeather(city) {
