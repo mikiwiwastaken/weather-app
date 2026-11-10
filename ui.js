@@ -62,7 +62,7 @@ export function renderRecentSearches(cities) {
 
   cities.forEach((city) => {
     const item = document.createElement("li");
-    item.className = "recent-item";
+    item.dataset.city = city;
     item.tabIndex = 0;
 
     const icon = document.createElement("i");
