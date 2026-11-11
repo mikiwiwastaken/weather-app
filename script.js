@@ -23,6 +23,7 @@ const temperatureOptions = document.getElementById("temperature-options");
 let cityInput = document.getElementById("city-input");
 let recentSearches;
 let currentUnit;
+let latestSearchId = 0;
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -64,25 +65,32 @@ temperatureOptions.addEventListener("click", (event) => {
 });
 
 async function searchWeather(city) {
+  const searchId = ++latestSearchId;
+
   try {
     showLoading();
 
     const location = await getLocation(city);
+    if (searchId !== latestSearchId) return; // a newer search has started
+
     const weather = await getWeather(location.latitude, location.longitude);
-    const cityName = location.name;
+    if (searchId !== latestSearchId) return;
 
     showWeather(location, weather, currentUnit);
 
-    recentSearches = recentSearches.filter((city) => city !== cityName);
-    recentSearches.unshift(cityName);
+    recentSearches = recentSearches.filter((city) => city !== location.name);
+    recentSearches.unshift(location.name);
     if (recentSearches.length > 5) recentSearches.pop();
 
     updateRecentSearches();
   } catch (error) {
+    if (searchId !== latestSearchId) return; // ignore errors of outdated searches
+
     console.error(error);
     showError(error);
   } finally {
-    enableSearch();
+    // Only the latest search may re-enable the button
+    if (searchId === latestSearchId) enableSearch();
   }
 }
 
