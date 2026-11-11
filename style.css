@@ -313,6 +313,68 @@ body {
   color: var(--error);
 }
 
+/* ---------- Temperature Unit Switch ---------- */
+.temperature-switch {
+  position: absolute;
+  top: 0;
+  right: calc(50% + 230px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: auto;
+  padding: 0;
+
+  background: transparent;
+  border-radius: 0;
+}
+
+.temperature-switch__options {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 4px;
+  border-radius: 10px;
+  background: #eaf0f4;
+}
+
+.temperature-switch__btn {
+  min-width: 42px;
+  padding: 8px 10px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: transparent;
+  color: var(--ink-soft);
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.temperature-switch__btn:hover {
+  color: var(--ink);
+}
+
+.temperature-switch__btn.is-active {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
+}
+
+.temperature-switch__btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 850px) {
   body {
@@ -333,6 +395,16 @@ body {
     position: static;
     width: 100%;
     max-width: 420px;
+  }
+
+  .temperature-switch {
+    position: static;
+    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 10px 14px;
   }
 }
 

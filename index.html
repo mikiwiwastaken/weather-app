@@ -20,6 +20,29 @@
       <h1 class="app__title">Weather</h1>
 
       <div class="app__content">
+        <!-- Temperature Unit Switch -->
+        <div class="temperature-switch">
+          <div class="temperature-switch__options">
+            <button
+              type="button"
+              class="temperature-switch__btn is-active"
+              data-unit="celsius"
+              aria-pressed="true"
+            >
+              °C
+            </button>
+
+            <button
+              type="button"
+              class="temperature-switch__btn"
+              data-unit="fahrenheit"
+              aria-pressed="false"
+            >
+              °F
+            </button>
+          </div>
+        </div>
+
         <!-- Weather Section -->
         <div class="app__main">
           <form id="search-form" class="search">
