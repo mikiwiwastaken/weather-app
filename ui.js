@@ -71,7 +71,13 @@ export function renderRecentSearches(cities) {
     const name = document.createElement("span");
     name.textContent = city;
 
-    item.append(icon, name);
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "recent-searches__remove";
+    closeBtn.innerHTML = "&times;";
+    closeBtn.setAttribute("aria-label", `Remove ${city}`);
+
+    item.append(icon, name, closeBtn);
     recentList.appendChild(item);
   });
 }
