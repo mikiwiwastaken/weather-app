@@ -1,3 +1,5 @@
+import { TEMPERATURE_UNITS } from "./units.js";
+
 export function saveCities(cities) {
   try {
     localStorage.setItem("cities", JSON.stringify(cities));
@@ -26,8 +28,8 @@ export function saveTemperatureUnit(temperatureUnit) {
 
 export function loadTemperatureUnit() {
   try {
-    const temperatureUnit = localStorage.getItem("temperature_unit");
-    return temperatureUnit;
+    const unit = localStorage.getItem("temperature_unit");
+    return Object.hasOwn(TEMPERATURE_UNITS, unit) ? unit : null;
   } catch (error) {
     console.error(error);
     return null;

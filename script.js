@@ -14,6 +14,7 @@ import {
   saveTemperatureUnit,
   loadTemperatureUnit,
 } from "./storage.js";
+import { DEFAULT_UNIT } from "./units.js";
 
 const searchForm = document.getElementById("search-form");
 const recentList = document.getElementById("recent-list");
@@ -101,7 +102,7 @@ function updateRecentSearches() {
 
 function init() {
   recentSearches = loadCities() ?? [];
-  currentUnit = loadTemperatureUnit() ?? "celsius";
+  currentUnit = loadTemperatureUnit() ?? DEFAULT_UNIT;
 
   renderRecentSearches(recentSearches);
   highlightSelectedTemperatureUnit(currentUnit);
