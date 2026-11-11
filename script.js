@@ -37,11 +37,9 @@ recentList.addEventListener("click", (event) => {
   if (!item) return;
 
   if (event.target.closest(".recent-searches__remove")) {
-    const city = item.dataset.city;
     recentSearches = recentSearches.filter(
-      (recentSearch) => recentSearch !== city,
+      (recentSearch) => recentSearch !== item.dataset.city,
     );
-
     updateRecentSearches();
   } else {
     cityInput.value = item.dataset.city;
