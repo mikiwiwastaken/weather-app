@@ -1,6 +1,6 @@
-export function saveCities(searches) {
+export function saveCities(cities) {
   try {
-    localStorage.setItem("cities", JSON.stringify(searches));
+    localStorage.setItem("cities", JSON.stringify(cities));
   } catch (error) {
     console.error(error);
   }
