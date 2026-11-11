@@ -12,7 +12,7 @@ const searchForm = document.getElementById("search-form");
 const recentList = document.getElementById("recent-list");
 
 let cityInput = document.getElementById("city-input");
-let cities = loadCities() ? loadCities() : [];
+let cities = [];
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -54,4 +54,9 @@ async function searchWeather(city) {
   }
 }
 
-renderRecentSearches(cities);
+function init() {
+  if (loadCities()) cities = loadCities();
+  renderRecentSearches(cities);
+}
+
+init();
