@@ -21,7 +21,7 @@ const temperatureOptions = document.getElementById("temperature-options");
 
 let cityInput = document.getElementById("city-input");
 let recentSearches = [];
-let temperatureUnit = "C";
+let temperatureUnit = "celsius";
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -94,6 +94,7 @@ function init() {
   if (loadCities()) recentSearches = loadCities();
   if (loadTemperatureUnit()) temperatureUnit = loadTemperatureUnit();
   renderRecentSearches(recentSearches);
+  highlightSelectedTemperatureUnit(temperatureUnit);
 }
 
 init();
