@@ -322,12 +322,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 
   width: auto;
   padding: 0;
 
   background: transparent;
   border-radius: 0;
+}
+
+.temperature-switch__label {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .temperature-switch__options {
