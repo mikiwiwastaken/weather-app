@@ -6,14 +6,21 @@ import {
   enableSearch,
   renderRecentSearches,
 } from "./ui.js";
-import { saveCities, loadCities } from "./storage.js";
+import {
+  saveCities,
+  loadCities,
+  saveTemperatureUnit,
+  loadTemperatureUnit,
+} from "./storage.js";
 
 const searchForm = document.getElementById("search-form");
 const recentList = document.getElementById("recent-list");
 const clearHistoryBtn = document.getElementById("clear-history");
+const temperatureOptions = document.getElementById("temperature-options");
 
 let cityInput = document.getElementById("city-input");
 let recentSearches = [];
+let temperatureUnit = "C";
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -43,6 +50,14 @@ recentList.addEventListener("click", (event) => {
 clearHistoryBtn.addEventListener("click", () => {
   recentSearches = [];
   updateRecentSearches();
+});
+
+temperatureOptions.addEventListener("click", (event) => {
+  const temperatureSwitchBtn = event.target.closest(".temperature-switch__btn");
+  if (!temperatureSwitchBtn) return;
+
+  temperatureUnit = temperatureSwitchBtn.dataset.unit === "celsius" ? "C" : "F";
+  saveTemperatureUnit(temperatureUnit);
 });
 
 async function searchWeather(city) {
@@ -75,6 +90,7 @@ function updateRecentSearches() {
 
 function init() {
   if (loadCities()) recentSearches = loadCities();
+  if (loadTemperatureUnit()) temperatureUnit = loadTemperatureUnit();
   renderRecentSearches(recentSearches);
 }
 
