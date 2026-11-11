@@ -1,5 +1,6 @@
 import { getWeatherDetails } from "./weather-codes.js";
 import { convertTemperature } from "./temperature-utils.js";
+import { TEMPERATURE_UNITS } from "./units.js";
 
 const card = document.getElementById("weather-card");
 const status = document.getElementById("status");
@@ -16,7 +17,13 @@ const recentEmpty = document.getElementById("recent-empty");
 const recentList = document.getElementById("recent-list");
 
 const switchBtns = document.querySelectorAll(".temperature-switch__btn");
-let realValue = 0;
+let currentCelsius = 0;
+
+function formatTemperature(celsius, unit) {
+  const rounded = convertTemperature(celsius, "celsius", unit).toFixed(1);
+  const text = rounded === "-0.0" ? "0.0" : rounded;
+  return `${text}${TEMPERATURE_UNITS[unit].label}`;
+}
 
 export function showLoading() {
   card.hidden = true;
@@ -45,15 +52,11 @@ export function showWeather(location, weather, currentUnit) {
 
   status.hidden = true;
 
-  realValue = weather.current.temperature_2m;
-  const temperatureValue = Number(
-    convertTemperature(weather.current.temperature_2m, "celsius", currentUnit),
-  ).toFixed(1);
-  const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
+  currentCelsius = weather.current.temperature_2m;
 
   cityName.textContent = location.name;
   weatherIcon.className = details.icon;
-  temperature.textContent = `${temperatureValue}${temperatureUnit}`;
+  temperature.textContent = formatTemperature(currentCelsius, currentUnit);
   description.textContent = details.description;
   humidity.textContent = `${weather.current.relative_humidity_2m}${weather.current_units.relative_humidity_2m}`;
   wind.textContent = `${weather.current.wind_speed_10m}${weather.current_units.wind_speed_10m}`;
@@ -104,7 +107,5 @@ export function highlightSelectedTemperatureUnit(unit) {
 }
 
 export function updateTemperature(currentUnit) {
-  const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
-
-  temperature.textContent = `${Number(convertTemperature(realValue, "celsius", currentUnit)).toFixed(1)}${temperatureUnit}`;
+  temperature.textContent = formatTemperature(currentCelsius, currentUnit);
 }
