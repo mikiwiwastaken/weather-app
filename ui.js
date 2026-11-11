@@ -2,7 +2,7 @@ import { getWeatherDetails } from "./weather-codes.js";
 
 const card = document.getElementById("weather-card");
 const status = document.getElementById("status");
-const btn = document.getElementById("search-btn");
+const searchBtn = document.getElementById("search-btn");
 
 const cityName = document.getElementById("city-name");
 const weatherIcon = document.querySelector("#weather-icon i");
@@ -14,10 +14,12 @@ const wind = document.getElementById("wind");
 const recentEmpty = document.getElementById("recent-empty");
 const recentList = document.getElementById("recent-list");
 
+const switchBtns = document.querySelectorAll(".temperature-switch__btn");
+
 export function showLoading() {
   card.hidden = true;
   status.hidden = false;
-  btn.disabled = true;
+  searchBtn.disabled = true;
 
   status.classList.remove("status--error");
   status.textContent = "Loading...";
@@ -52,7 +54,7 @@ export function showWeather(location, weather) {
 }
 
 export function enableSearch() {
-  btn.disabled = false;
+  searchBtn.disabled = false;
 }
 
 export function renderRecentSearches(searches) {
@@ -79,5 +81,17 @@ export function renderRecentSearches(searches) {
 
     item.append(icon, name, closeBtn);
     recentList.appendChild(item);
+  });
+}
+
+export function highlightSelectedTemperatureUnit(unit) {
+  switchBtns.forEach((btn) => {
+    if (btn.dataset.unit === unit) {
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-pressed", "true");
+    } else {
+      btn.classList.remove("is-active");
+      btn.setAttribute("aria-pressed", "false");
+    }
   });
 }

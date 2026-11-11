@@ -5,6 +5,7 @@ import {
   showWeather,
   enableSearch,
   renderRecentSearches,
+  highlightSelectedTemperatureUnit,
 } from "./ui.js";
 import {
   saveCities,
@@ -58,6 +59,7 @@ temperatureOptions.addEventListener("click", (event) => {
 
   temperatureUnit = temperatureSwitchBtn.dataset.unit;
   saveTemperatureUnit(temperatureUnit);
+  highlightSelectedTemperatureUnit(temperatureUnit);
 });
 
 async function searchWeather(city) {
