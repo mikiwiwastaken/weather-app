@@ -73,12 +73,11 @@ export function renderRecentSearches(searches) {
   searches.forEach((city) => {
     const item = document.createElement("li");
     item.dataset.city = city;
-    item.tabIndex = 0;
 
     const icon = document.createElement("i");
     icon.className = "fa-solid fa-clock-rotate-left";
 
-    const name = document.createElement("span");
+    const name = document.createElement("button");
     name.textContent = city;
 
     const closeBtn = document.createElement("button");
