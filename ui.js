@@ -44,14 +44,11 @@ export function showWeather(location, weather, currentUnit) {
 
   status.hidden = true;
 
-  const temperatureValue =
-    currentUnit === "celsius"
-      ? weather.current.temperature_2m
-      : convertTemperature(
-          weather.current.temperature_2m,
-          "celsius",
-          "fahrenheit",
-        );
+  const temperatureValue = convertTemperature(
+    weather.current.temperature_2m,
+    "celsius",
+    currentUnit,
+  );
   const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
 
   cityName.textContent = location.name;
