@@ -46,11 +46,9 @@ export function showWeather(location, weather, currentUnit) {
   status.hidden = true;
 
   realValue = weather.current.temperature_2m;
-  const temperatureValue = convertTemperature(
-    weather.current.temperature_2m,
-    "celsius",
-    currentUnit,
-  );
+  const temperatureValue = Number(
+    convertTemperature(weather.current.temperature_2m, "celsius", currentUnit),
+  ).toFixed(1);
   const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
 
   cityName.textContent = location.name;
@@ -109,5 +107,5 @@ export function highlightSelectedTemperatureUnit(unit) {
 export function updateTemperature(currentUnit) {
   const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
 
-  temperature.textContent = `${convertTemperature(realValue, "celsius", currentUnit)}${temperatureUnit}`;
+  temperature.textContent = `${Number(convertTemperature(realValue, "celsius", currentUnit)).toFixed(1)}${temperatureUnit}`;
 }
