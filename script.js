@@ -20,8 +20,8 @@ const clearHistoryBtn = document.getElementById("clear-history");
 const temperatureOptions = document.getElementById("temperature-options");
 
 let cityInput = document.getElementById("city-input");
-let recentSearches = [];
-let temperatureUnit = "celsius";
+let recentSearches;
+let temperatureUnit;
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -91,8 +91,9 @@ function updateRecentSearches() {
 }
 
 function init() {
-  if (loadCities()) recentSearches = loadCities();
-  if (loadTemperatureUnit()) temperatureUnit = loadTemperatureUnit();
+  recentSearches = loadCities() ?? [];
+  temperatureUnit = loadTemperatureUnit() ?? "celsius";
+
   renderRecentSearches(recentSearches);
   highlightSelectedTemperatureUnit(temperatureUnit);
 }
