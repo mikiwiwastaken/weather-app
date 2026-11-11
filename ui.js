@@ -55,12 +55,12 @@ export function enableSearch() {
   btn.disabled = false;
 }
 
-export function renderRecentSearches(cities) {
+export function renderRecentSearches(searches) {
   recentList.innerHTML = "";
 
-  recentEmpty.hidden = cities.length > 0;
+  recentEmpty.hidden = searches.length > 0;
 
-  cities.forEach((city) => {
+  searches.forEach((city) => {
     const item = document.createElement("li");
     item.dataset.city = city;
     item.tabIndex = 0;
