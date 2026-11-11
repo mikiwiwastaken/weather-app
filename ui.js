@@ -106,7 +106,7 @@ export function highlightSelectedTemperatureUnit(unit) {
 
 export function updateTemperature(previousUnit, currentUnit) {
   const temperatureValue = Number(
-    temperature.textContent.replace(/[^\d.]/g, ""),
+    temperature.textContent.replace(/[^\d-.]/g, ""),
   );
   const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
 
