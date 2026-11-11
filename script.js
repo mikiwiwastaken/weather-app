@@ -20,8 +20,8 @@ const searchForm = document.getElementById("search-form");
 const recentList = document.getElementById("recent-list");
 const clearHistoryBtn = document.getElementById("clear-history");
 const temperatureOptions = document.getElementById("temperature-options");
+const cityInput = document.getElementById("city-input");
 
-let cityInput = document.getElementById("city-input");
 let recentSearches;
 let currentUnit;
 let latestSearchId = 0;
