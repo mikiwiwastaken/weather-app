@@ -58,8 +58,7 @@ temperatureOptions.addEventListener("click", (event) => {
   const temperatureSwitchBtn = event.target.closest(".temperature-switch__btn");
   if (!temperatureSwitchBtn) return;
 
-  const previousUnit =
-    event.target.closest(".temperature-switch__btn.is-active") ?? currentUnit;
+  const previousUnit = currentUnit;
   currentUnit = temperatureSwitchBtn.dataset.unit;
 
   saveTemperatureUnit(currentUnit);

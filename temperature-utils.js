@@ -1,5 +1,5 @@
 export function convertTemperature(value, fromUnit, toUnit) {
-  if (fromUnit === toUnit) return;
+  if (fromUnit === toUnit) return value;
 
   if (fromUnit === "celsius" && toUnit === "fahrenheit") {
     return (value * 9) / 5 + 32;
