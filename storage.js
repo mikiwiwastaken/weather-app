@@ -15,3 +15,21 @@ export function loadCities() {
     return null;
   }
 }
+
+export function saveTemperatureUnit(temperatureUnit) {
+  try {
+    localStorage.setItem("temperature_unit", temperatureUnit);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function loadTemperatureUnit() {
+  try {
+    const temperatureUnit = localStorage.getItem("temperature_unit");
+    return temperatureUnit;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
