@@ -16,6 +16,7 @@ const recentEmpty = document.getElementById("recent-empty");
 const recentList = document.getElementById("recent-list");
 
 const switchBtns = document.querySelectorAll(".temperature-switch__btn");
+let realValue = 0;
 
 export function showLoading() {
   card.hidden = true;
@@ -44,6 +45,7 @@ export function showWeather(location, weather, currentUnit) {
 
   status.hidden = true;
 
+  realValue = weather.current.temperature_2m;
   const temperatureValue = convertTemperature(
     weather.current.temperature_2m,
     "celsius",
@@ -104,11 +106,8 @@ export function highlightSelectedTemperatureUnit(unit) {
   });
 }
 
-export function updateTemperature(previousUnit, currentUnit) {
-  const temperatureValue = Number(
-    temperature.textContent.replace(/[^\d-.]/g, ""),
-  );
+export function updateTemperature(currentUnit) {
   const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
 
-  temperature.textContent = `${convertTemperature(temperatureValue, previousUnit, currentUnit)}${temperatureUnit}`;
+  temperature.textContent = `${convertTemperature(realValue, "celsius", currentUnit)}${temperatureUnit}`;
 }

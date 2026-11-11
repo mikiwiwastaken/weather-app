@@ -58,12 +58,11 @@ temperatureOptions.addEventListener("click", (event) => {
   const temperatureSwitchBtn = event.target.closest(".temperature-switch__btn");
   if (!temperatureSwitchBtn) return;
 
-  const previousUnit = currentUnit;
   currentUnit = temperatureSwitchBtn.dataset.unit;
 
   saveTemperatureUnit(currentUnit);
   highlightSelectedTemperatureUnit(currentUnit);
-  updateTemperature(previousUnit, currentUnit);
+  updateTemperature(currentUnit);
 });
 
 async function searchWeather(city) {
