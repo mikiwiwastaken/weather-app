@@ -10,6 +10,7 @@ import { saveCities, loadCities } from "./storage.js";
 
 const searchForm = document.getElementById("search-form");
 const recentList = document.getElementById("recent-list");
+const clearHistoryBtn = document.getElementById("clear-history");
 
 let cityInput = document.getElementById("city-input");
 let cities = [];
@@ -30,12 +31,16 @@ recentList.addEventListener("click", (event) => {
     const dataCity = item.dataset.city;
     cities = cities.filter((city) => city !== dataCity);
 
-    saveCities(cities);
-    renderRecentSearches(cities);
+    updateRecentSearches();
   } else {
     cityInput.value = item.dataset.city;
     searchWeather(cityInput.value);
   }
+});
+
+clearHistoryBtn.addEventListener("click", () => {
+  cities = [];
+  updateRecentSearches();
 });
 
 async function searchWeather(city) {
@@ -52,14 +57,18 @@ async function searchWeather(city) {
     cities.unshift(cityName);
     if (cities.length > 5) cities.pop();
 
-    saveCities(cities);
-    renderRecentSearches(cities);
+    updateRecentSearches();
   } catch (error) {
     console.error(error);
     showError(error);
   } finally {
     enableSearch();
   }
+}
+
+function updateRecentSearches() {
+  saveCities(cities);
+  renderRecentSearches(cities);
 }
 
 function init() {
