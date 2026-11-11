@@ -56,7 +56,7 @@ temperatureOptions.addEventListener("click", (event) => {
   const temperatureSwitchBtn = event.target.closest(".temperature-switch__btn");
   if (!temperatureSwitchBtn) return;
 
-  temperatureUnit = temperatureSwitchBtn.dataset.unit === "celsius" ? "C" : "F";
+  temperatureUnit = temperatureSwitchBtn.dataset.unit;
   saveTemperatureUnit(temperatureUnit);
 });
 
