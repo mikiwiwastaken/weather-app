@@ -320,7 +320,6 @@ body {
   }
 }
 
-/* ---------- Small Screens ---------- */
 @media (max-width: 360px) {
   .card__temp {
     font-size: 4rem;
