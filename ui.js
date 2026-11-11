@@ -1,4 +1,5 @@
 import { getWeatherDetails } from "./weather-codes.js";
+import { convertTemperature } from "./temperature-utils.js";
 
 const card = document.getElementById("weather-card");
 const status = document.getElementById("status");
@@ -38,14 +39,24 @@ export function showError(error) {
   }
 }
 
-export function showWeather(location, weather) {
+export function showWeather(location, weather, currentUnit) {
   const details = getWeatherDetails(weather.current.weather_code);
 
   status.hidden = true;
 
+  const temperatureValue =
+    currentUnit === "celsius"
+      ? weather.current.temperature_2m
+      : convertTemperature(
+          weather.current.temperature_2m,
+          "celsius",
+          "fahrenheit",
+        );
+  const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
+
   cityName.textContent = location.name;
   weatherIcon.className = details.icon;
-  temperature.textContent = `${weather.current.temperature_2m}${weather.current_units.temperature_2m}`;
+  temperature.textContent = `${temperatureValue}${temperatureUnit}`;
   description.textContent = details.description;
   humidity.textContent = `${weather.current.relative_humidity_2m}${weather.current_units.relative_humidity_2m}`;
   wind.textContent = `${weather.current.wind_speed_10m}${weather.current_units.wind_speed_10m}`;
@@ -94,4 +105,13 @@ export function highlightSelectedTemperatureUnit(unit) {
       btn.setAttribute("aria-pressed", "false");
     }
   });
+}
+
+export function updateTemperature(previousUnit, currentUnit) {
+  const temperatureValue = Number(
+    temperature.textContent.replace(/[^\d.]/g, ""),
+  );
+  const temperatureUnit = currentUnit === "celsius" ? "°C" : "°F";
+
+  temperature.textContent = `${convertTemperature(temperatureValue, previousUnit, currentUnit)}${temperatureUnit}`;
 }

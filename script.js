@@ -6,6 +6,7 @@ import {
   enableSearch,
   renderRecentSearches,
   highlightSelectedTemperatureUnit,
+  updateTemperature,
 } from "./ui.js";
 import {
   saveCities,
@@ -21,7 +22,7 @@ const temperatureOptions = document.getElementById("temperature-options");
 
 let cityInput = document.getElementById("city-input");
 let recentSearches;
-let temperatureUnit;
+let currentUnit;
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -57,9 +58,13 @@ temperatureOptions.addEventListener("click", (event) => {
   const temperatureSwitchBtn = event.target.closest(".temperature-switch__btn");
   if (!temperatureSwitchBtn) return;
 
-  temperatureUnit = temperatureSwitchBtn.dataset.unit;
-  saveTemperatureUnit(temperatureUnit);
-  highlightSelectedTemperatureUnit(temperatureUnit);
+  const previousUnit =
+    event.target.closest(".temperature-switch__btn.is-active") ?? currentUnit;
+  currentUnit = temperatureSwitchBtn.dataset.unit;
+
+  saveTemperatureUnit(currentUnit);
+  highlightSelectedTemperatureUnit(currentUnit);
+  updateTemperature(previousUnit, currentUnit);
 });
 
 async function searchWeather(city) {
@@ -70,7 +75,7 @@ async function searchWeather(city) {
     const weather = await getWeather(location.latitude, location.longitude);
     const cityName = location.name;
 
-    showWeather(location, weather);
+    showWeather(location, weather, currentUnit);
 
     recentSearches = recentSearches.filter((city) => city !== cityName);
     recentSearches.unshift(cityName);
@@ -92,10 +97,10 @@ function updateRecentSearches() {
 
 function init() {
   recentSearches = loadCities() ?? [];
-  temperatureUnit = loadTemperatureUnit() ?? "celsius";
+  currentUnit = loadTemperatureUnit() ?? "celsius";
 
   renderRecentSearches(recentSearches);
-  highlightSelectedTemperatureUnit(temperatureUnit);
+  highlightSelectedTemperatureUnit(currentUnit);
 }
 
 init();
