@@ -13,7 +13,7 @@ const recentList = document.getElementById("recent-list");
 const clearHistoryBtn = document.getElementById("clear-history");
 
 let cityInput = document.getElementById("city-input");
-let cities = [];
+let recentSearches = [];
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -28,8 +28,10 @@ recentList.addEventListener("click", (event) => {
   if (!item) return;
 
   if (event.target.closest(".recent-searches__remove")) {
-    const dataCity = item.dataset.city;
-    cities = cities.filter((city) => city !== dataCity);
+    const city = item.dataset.city;
+    recentSearches = recentSearches.filter(
+      (recentSearch) => recentSearch !== city,
+    );
 
     updateRecentSearches();
   } else {
@@ -39,7 +41,7 @@ recentList.addEventListener("click", (event) => {
 });
 
 clearHistoryBtn.addEventListener("click", () => {
-  cities = [];
+  recentSearches = [];
   updateRecentSearches();
 });
 
@@ -53,9 +55,9 @@ async function searchWeather(city) {
 
     showWeather(location, weather);
 
-    cities = cities.filter((city) => city !== cityName);
-    cities.unshift(cityName);
-    if (cities.length > 5) cities.pop();
+    recentSearches = recentSearches.filter((city) => city !== cityName);
+    recentSearches.unshift(cityName);
+    if (recentSearches.length > 5) recentSearches.pop();
 
     updateRecentSearches();
   } catch (error) {
@@ -67,13 +69,13 @@ async function searchWeather(city) {
 }
 
 function updateRecentSearches() {
-  saveCities(cities);
-  renderRecentSearches(cities);
+  saveCities(recentSearches);
+  renderRecentSearches(recentSearches);
 }
 
 function init() {
-  if (loadCities()) cities = loadCities();
-  renderRecentSearches(cities);
+  if (loadCities()) recentSearches = loadCities();
+  renderRecentSearches(recentSearches);
 }
 
 init();
