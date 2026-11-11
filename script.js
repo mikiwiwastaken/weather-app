@@ -26,8 +26,16 @@ recentList.addEventListener("click", (event) => {
   const item = event.target.closest("li");
   if (!item) return;
 
-  cityInput.value = item.dataset.city;
-  searchWeather(cityInput.value);
+  if (event.target.closest(".recent-searches__remove")) {
+    const dataCity = item.dataset.city;
+    cities = cities.filter((city) => city !== dataCity);
+
+    saveCities(cities);
+    renderRecentSearches(cities);
+  } else {
+    cityInput.value = item.dataset.city;
+    searchWeather(cityInput.value);
+  }
 });
 
 async function searchWeather(city) {
