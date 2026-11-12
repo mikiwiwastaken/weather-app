@@ -1,20 +1,53 @@
 import { TEMPERATURE_UNITS } from "./units.js";
 
-export function saveCities(cities) {
-  try {
-    localStorage.setItem("cities", JSON.stringify(cities));
-  } catch (error) {
-    console.error(error);
-  }
-}
+export class CityStorage {
+  #key;
+  #maxItems;
+  #cities;
 
-export function loadCities() {
-  try {
-    const cities = JSON.parse(localStorage.getItem("cities"));
-    return Array.isArray(cities) ? cities : null;
-  } catch (error) {
-    console.error(error);
-    return null;
+  constructor(key = "cities", maxItems = 5) {
+    this.#key = key;
+    this.#maxItems = maxItems;
+    this.#cities = this.#load();
+  }
+
+  add(city) {
+    this.#cities = this.#cities.filter((savedCity) => savedCity !== city);
+    this.#cities.unshift(city);
+    if (this.#cities.length > this.#maxItems) this.#cities.pop();
+    this.#save();
+  }
+
+  remove(city) {
+    this.#cities = this.#cities.filter((savedCity) => savedCity !== city);
+    this.#save();
+  }
+
+  clear() {
+    this.#cities = [];
+    this.#save();
+  }
+
+  getAll() {
+    return [...this.#cities];
+  }
+
+  #load() {
+    try {
+      const cities = JSON.parse(localStorage.getItem(this.#key));
+      return Array.isArray(cities) ? cities : [];
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  #save() {
+    try {
+      localStorage.setItem(this.#key, JSON.stringify(this.#cities));
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

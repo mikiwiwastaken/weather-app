@@ -9,8 +9,7 @@ import {
   updateTemperature,
 } from "./ui.js";
 import {
-  saveCities,
-  loadCities,
+  CityStorage,
   saveTemperatureUnit,
   loadTemperatureUnit,
 } from "./storage.js";
@@ -22,9 +21,10 @@ const clearHistoryBtn = document.getElementById("clear-history");
 const temperatureOptions = document.getElementById("temperature-options");
 const cityInput = document.getElementById("city-input");
 
-let recentSearches;
 let currentUnit;
 let latestSearchId = 0;
+
+const cityStorage = new CityStorage();
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -39,10 +39,8 @@ recentList.addEventListener("click", (event) => {
   if (!item) return;
 
   if (event.target.closest(".recent-searches__remove")) {
-    recentSearches = recentSearches.filter(
-      (recentSearch) => recentSearch !== item.dataset.city,
-    );
-    updateRecentSearches();
+    cityStorage.remove(item.dataset.city);
+    renderRecentSearches(cityStorage.getAll());
   } else {
     cityInput.value = item.dataset.city;
     searchWeather(cityInput.value);
@@ -50,8 +48,8 @@ recentList.addEventListener("click", (event) => {
 });
 
 clearHistoryBtn.addEventListener("click", () => {
-  recentSearches = [];
-  updateRecentSearches();
+  cityStorage.clear();
+  renderRecentSearches(cityStorage.getAll());
 });
 
 temperatureOptions.addEventListener("click", (event) => {
@@ -79,11 +77,8 @@ async function searchWeather(city) {
 
     showWeather(location, weather, currentUnit);
 
-    recentSearches = recentSearches.filter((city) => city !== location.name);
-    recentSearches.unshift(location.name);
-    if (recentSearches.length > 5) recentSearches.pop();
-
-    updateRecentSearches();
+    cityStorage.add(location.name);
+    renderRecentSearches(cityStorage.getAll());
   } catch (error) {
     if (searchId !== latestSearchId) return; // ignore errors of outdated searches
 
@@ -95,16 +90,9 @@ async function searchWeather(city) {
   }
 }
 
-function updateRecentSearches() {
-  saveCities(recentSearches);
-  renderRecentSearches(recentSearches);
-}
-
 function init() {
-  recentSearches = loadCities() ?? [];
   currentUnit = loadTemperatureUnit() ?? DEFAULT_UNIT;
-
-  renderRecentSearches(recentSearches);
+  renderRecentSearches(cityStorage.getAll());
   highlightSelectedTemperatureUnit(currentUnit);
 }
 
